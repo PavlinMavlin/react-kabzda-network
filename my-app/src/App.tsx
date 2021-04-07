@@ -20,10 +20,7 @@ const App = () => {
                     <Route path='/profile' component={Profile}/>
                     <Route path='/news' component={News}/>
                     <Route path='/music' component={Music}/>
-                    <Route path='/music' component={Music}/>
-                    <Route path='/music' component={Music}/>
-                    <Route path='/music' component={Music}/>
-                    <Route path='/music' component={Music}/>
+
 
 
                 </div>
