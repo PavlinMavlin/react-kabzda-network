@@ -1,12 +1,25 @@
 import React from "react";
 import s from './MyPosts.module.css'
 import {Post} from "./Post/Post";
+import {PostType} from "../../../Redux/State";
 
-export const MyPosts = () => {
+
+type MyPostsType = {
+
+    posts: Array<PostType>
+}
+
+
+export const MyPosts = (props: MyPostsType) => {
+
+
+    let postsElements = props.posts.map(
+        (p) => <Post message={p.message} likesCount={p.likesCount}/>
+    )
     return (
 
         <div className={s.postsBlock}>
-           <h3>My post</h3>
+            <h3>My post</h3>
             <div>
                 <div>
                     <textarea></textarea>
@@ -17,8 +30,7 @@ export const MyPosts = () => {
             </div>
 
             <div className={s.posts}>
-                <Post message={'Hi, how are you ?'} like={15}/>
-                <Post message={`It's, my first post`} like={10}/>
+                {postsElements}
 
 
             </div>

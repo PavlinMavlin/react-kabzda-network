@@ -7,19 +7,27 @@ import {Dialogs} from "./components/Dialogs/Dialogs";
 import {BrowserRouter, Route} from "react-router-dom"
 import {News} from "./components/News/News";
 import {Music} from "./components/Music/Music";
+import  {RootStateType} from "./Redux/State";
+
+type AppPropsType={
+    state:RootStateType
+}
 
 
-const App = () => {
+const App = (props:AppPropsType) => {
+
+
+
     return (
         <BrowserRouter>
             <div className='app-wrapper'>
                 <Header/>
                 <Navbar/>
                 <div className={'app-wrapper-content'}>
-                    <Route path='/dialogs' component={Dialogs}/>
-                    <Route path='/profile' component={Profile}/>
-                    <Route path='/news' component={News}/>
-                    <Route path='/music' component={Music}/>
+                    <Route path='/dialogs' render={()=><Dialogs dialogs={props.state.dialogsPage.dialogs} messages={props.state.dialogsPage.messages} />}/>
+                    <Route path='/profile' render={()=><Profile posts={props.state.profilePage.posts} />}/>
+                    <Route path='/news' render={()=><News/>}/>
+                    <Route path='/music' render={()=><Music/>}/>
 
 
 
