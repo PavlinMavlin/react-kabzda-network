@@ -6,6 +6,7 @@ import {PostType, ProfilePageType} from "../../Redux/State";
 
 type ProfileProps = {
     posts: Array<PostType>
+    addPost:(postText: string)=>void
 }
 
 // ]
@@ -17,7 +18,7 @@ export const Profile = (props: ProfileProps) => {
 
 
             <MyPosts posts={props.posts}
-
+                     addPost={props.addPost}
             />
 
 

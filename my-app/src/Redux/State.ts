@@ -1,3 +1,5 @@
+import {rerenderEntireTree} from "../render";
+
 
 export type RootStateType={
     profilePage:ProfilePageType
@@ -62,5 +64,17 @@ export let state:RootStateType = {
     },
     sidebar:{}
 }
+
+export const addPost=(postText:string)=>{
+const newPost:PostType={
+    id: new Date().getTime(),
+    message:postText,
+    likesCount:0
+}
+state.profilePage.posts.push(newPost)
+    rerenderEntireTree(state)
+}
+
+
 export default state
 
