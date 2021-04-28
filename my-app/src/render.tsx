@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import state, {addPost, RootStateType} from "./Redux/State"
+import state, {addPost, changeNewText, RootStateType} from "./Redux/State"
 
 
  export const rerenderEntireTree=(state:RootStateType)=> {
@@ -11,6 +11,7 @@ import state, {addPost, RootStateType} from "./Redux/State"
         <React.StrictMode>
             <App state={state}
                  addPost={addPost}
+                 changeNewText={changeNewText}
             />
         </React.StrictMode>,
         document.getElementById('root')
