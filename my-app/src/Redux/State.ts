@@ -1,5 +1,12 @@
-import {rerenderEntireTree} from "../render";
 
+
+let onChange=()=>{
+    console.log("fif")
+}
+
+export const subscribe=(callback:()=>void)=>{
+    onChange=callback
+}
 
 export type RootStateType={
     profilePage:ProfilePageType
@@ -75,11 +82,11 @@ const newPost:PostType={
 }
 state.profilePage.posts.push(newPost)
 
-    rerenderEntireTree(state)
+    onChange()
 }
 export const changeNewText=(newText:string)=>{
     state.profilePage.newPostText=newText
-    rerenderEntireTree(state)
+    onChange()
 }
 
 export default state

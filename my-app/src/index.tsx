@@ -1,16 +1,12 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 import './index.css';
-import App from './App';
 import reportWebVitals from './reportWebVitals';
-import state, {addPost, RootStateType} from "./Redux/State"
+import {subscribe} from "./Redux/State";
 import {rerenderEntireTree} from "./render";
 
 
- rerenderEntireTree(state)
-
-
-
+subscribe(rerenderEntireTree)
+rerenderEntireTree()
 
 
 
