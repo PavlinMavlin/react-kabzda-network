@@ -1,11 +1,12 @@
 import React from 'react';
 import './index.css';
 import reportWebVitals from './reportWebVitals';
-import {subscribe} from "./Redux/State";
+
 import {rerenderEntireTree} from "./render";
+import store from "./Redux/State";
 
 
-subscribe(rerenderEntireTree)
+store.subscribe(rerenderEntireTree)
 rerenderEntireTree()
 
 
