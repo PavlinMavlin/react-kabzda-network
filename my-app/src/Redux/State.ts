@@ -29,23 +29,28 @@ export type SidebarType = {}
 export type StoreType = {
     _state: RootStateType
     _onChange: () => void
-    addPost: (postText: string) => void
-    changeNewText: (newText: string) => void
     subscribe: (callback: () => void) => void
     getState: () => RootStateType
     dispatch: (action: ActionTypes) => void
 }
-type AddPostActionType = {
-    type: "ADD-POST"
-    postText: string
+
+
+
+export type ActionTypes =  ReturnType<typeof addPostAC> | ReturnType<typeof changeNewTextAC>
+
+export const addPostAC = (postText: string) => {
+    return {
+        type: "ADD-POST",
+        postText: postText
+    } as const
+}
+export const changeNewTextAC = (newText: string) => {
+    return {
+        type: "CHANGE-NEW-TEXT",
+        newText: newText
+    } as const
 }
 
-type ChangeNewTextActionType = {
-    type: "CHANGE-NEW-TEXT"
-    newText: string
-}
-
-export type ActionTypes = AddPostActionType | ChangeNewTextActionType
 const store: StoreType = {
     _state: {
         profilePage: {
@@ -84,19 +89,6 @@ const store: StoreType = {
     _onChange() {
         console.log("state change")
     },
-    addPost(postText: string) {
-        const newPost: PostType = {
-            id: new Date().getTime(),
-            message: postText,
-            likesCount: 0
-        }
-        this._state.profilePage.posts.push(newPost)
-        this._onChange()
-    },
-    changeNewText(newText: string) {
-        this._state.profilePage.newPostText = newText
-        this._onChange()
-    },
     subscribe(callback: () => void) {
         this._onChange = callback
     },
@@ -118,5 +110,7 @@ const store: StoreType = {
         }
     }
 }
+
+
 export default store
 
