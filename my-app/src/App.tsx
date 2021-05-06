@@ -7,12 +7,13 @@ import {Dialogs} from "./components/Dialogs/Dialogs";
 import {BrowserRouter, Route} from "react-router-dom"
 import {News} from "./components/News/News";
 import {Music} from "./components/Music/Music";
-import {StoreType} from "./Redux/State";
+import {ActionTypes, StoreType} from "./Redux/State";
 
 type AppPropsType = {
     store: StoreType
-    addPost: (postText: string) => void
-    changeNewText: (newText: string) => void
+    // addPost: (postText: string) => void
+    // changeNewText: (newText: string) => void
+    dispatch: (action: ActionTypes) => void
 }
 
 
@@ -30,8 +31,9 @@ const App = (props: AppPropsType) => {
                                                                   messages={state.dialogsPage.messages}/>}/>
                     <Route path='/profile' render={() => <Profile newPostText={state.profilePage.newPostText}
                                                                   posts={state.profilePage.posts}
-                                                                  addPost={props.store.addPost.bind(props.store)}
-                                                                  changeNewText={props.store.changeNewText.bind(props.store)}
+                                                                  dispatch={props.dispatch}
+                        //                                               addPost={props.store.addPost.bind(props.store)}
+                        //                                               changeNewText={props.store.changeNewText.bind(props.store)}
                     />}/>
                     <Route path='/news' render={() => <News/>}/>
                     <Route path='/music' render={() => <Music/>}/>

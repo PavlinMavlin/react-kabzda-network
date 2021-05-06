@@ -33,8 +33,19 @@ export type StoreType = {
     changeNewText: (newText: string) => void
     subscribe: (callback: () => void) => void
     getState: () => RootStateType
+    dispatch: (action: ActionTypes) => void
+}
+type AddPostActionType = {
+    type: "ADD-POST"
+    postText: string
 }
 
+type ChangeNewTextActionType = {
+    type: "CHANGE-NEW-TEXT"
+    newText: string
+}
+
+export type ActionTypes = AddPostActionType | ChangeNewTextActionType
 const store: StoreType = {
     _state: {
         profilePage: {
@@ -91,8 +102,21 @@ const store: StoreType = {
     },
     getState() {
         return this._state
+    },
+    dispatch(action) {
+        if (action.type === "ADD-POST") {
+            const newPost: PostType = {
+                id: new Date().getTime(),
+                message: action.postText,
+                likesCount: 0
+            }
+            this._state.profilePage.posts.push(newPost)
+            this._onChange()
+        } else if (action.type === "CHANGE-NEW-TEXT") {
+            this._state.profilePage.newPostText = action.newText
+            this._onChange()
+        }
     }
 }
-
 export default store
 
