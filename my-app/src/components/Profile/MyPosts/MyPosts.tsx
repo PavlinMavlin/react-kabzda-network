@@ -22,7 +22,7 @@ export const MyPosts = (props: MyPostsType) => {
     const onClickChangeTextHandler = (e: ChangeEvent<HTMLTextAreaElement>) => {
         props.dispatch(changeNewTextAC( e.currentTarget.value))
     }
-    // {type: "CHANGE-NEW-TEXT", newText: e.currentTarget.value}
+
 
     return (<div>
         <h3>My post</h3>
