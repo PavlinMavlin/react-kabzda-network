@@ -3,7 +3,7 @@ import './index.css';
 import reportWebVitals from './reportWebVitals';
 
 import {rerenderEntireTree} from "./render";
-import store from "./Redux/State";
+import store from "./Redux/redux-store";
 
 
 store.subscribe(rerenderEntireTree)

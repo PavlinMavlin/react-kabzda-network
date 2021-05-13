@@ -7,20 +7,19 @@ import {Dialogs} from "./components/Dialogs/Dialogs";
 import {BrowserRouter, Route} from "react-router-dom"
 import {News} from "./components/News/News";
 import {Music} from "./components/Music/Music";
-import {ActionTypes, DialogsPageType, StoreType} from "./Redux/State";
+import {ActionTypes, StoreType} from "./Redux/Store";
+import {DialogsContainer} from "./components/Dialogs/DialogsContainer";
+import {ReduxStoreType} from "./Redux/redux-store";
 
 type AppPropsType = {
-    store: StoreType
-
-    // addPost: (postText: string) => void
-    // changeNewText: (newText: string) => void
+    store: ReduxStoreType
     dispatch: (action: ActionTypes) => void
 }
 
 
 const App = (props: AppPropsType) => {
 
-    const state = props.store.getState()
+
 
     return (
         <BrowserRouter>
@@ -28,18 +27,9 @@ const App = (props: AppPropsType) => {
                 <Header/>
                 <Navbar/>
                 <div className={'app-wrapper-content'}>
-                    <Route path='/dialogs' render={() => <Dialogs dialogs={state.dialogsPage.dialogs}
-                                                                  messages={state.dialogsPage.messages}
-                                                                  newMessageBody={state.dialogsPage.newMessageBody}
-                                                                  dispatch={props.dispatch}
-                                                                    />}/>
+                    <Route path='/dialogs' render={() => <DialogsContainer store={props.store}/>}/>
 
-                    <Route path='/profile' render={() => <Profile newPostText={state.profilePage.newPostText}
-                                                                  posts={state.profilePage.posts}
-                                                                  dispatch={props.dispatch}
-                        //                                               addPost={props.store.addPost.bind(props.store)}
-                        //                                               changeNewText={props.store.changeNewText.bind(props.store)}
-                    />}/>
+                    <Route path='/profile' render={() => <Profile  store={props.store} />}/>
                     <Route path='/news' render={() => <News/>}/>
                     <Route path='/music' render={() => <Music/>}/>
 

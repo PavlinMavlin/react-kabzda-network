@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import store from "./Redux/State"
+import store from "./Redux/redux-store"
 
 export const rerenderEntireTree = () => {
     ReactDOM.render(
@@ -11,8 +11,7 @@ export const rerenderEntireTree = () => {
             <App
                 store={store}
                 dispatch={store.dispatch.bind(store)}
-                // addPost={store.addPost}
-                // changeNewText={store.changeNewText}
+
             />
         </React.StrictMode>,
         document.getElementById('root')
