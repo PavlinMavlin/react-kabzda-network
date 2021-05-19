@@ -1,40 +1,38 @@
-import React, {ChangeEvent} from 'react'
-
-import s from './Dialogs.module.css'
-import {DialogItem} from "./Dialogitem/DialogItemType";
-import {Message, MessageType} from "./Message/Message";
-import {ActionTypes, DialogType} from "../../Redux/Store";
-import {sendMessageAC, updateNewMessageBodyAC} from "../../Redux/dialogs-reducer";
+import React from 'react'
+import {DialogType, MessageType, sendMessageAC, updateNewMessageBodyAC} from "../../Redux/dialogs-reducer";
 import {Dialogs} from "./Dialogs";
-import {ReduxStoreType} from "../../Redux/redux-store";
+import {RootReduxStateType} from "../../Redux/redux-store";
+import {connect} from "react-redux";
+import {Dispatch} from 'redux';
 
 
-type DialogsContainersPropsType = {
-    store: ReduxStoreType
+type MapStateToPropsType = {
+    dialogs: Array<DialogType>,
+    messages: Array<MessageType>,
+    newMessageBody: string
+}
+type MapDispatchToPropsType = {
+    updateNewMessageBody: (body: string) => void
+    sendMessage: () => void
+}
+const mapStateToProps = (state: RootReduxStateType): MapStateToPropsType => {
+    return {
+        dialogs: state.dialogsPage.dialogs,
+        messages: state.dialogsPage.messages,
+        newMessageBody: state.dialogsPage.newMessageBody
+    }
+}
+const mapDispatchToProps = (dispatch: Dispatch): MapDispatchToPropsType => {
+    return {
+        updateNewMessageBody: (body: string) => {
+            dispatch(updateNewMessageBodyAC(body))
+        },
+        sendMessage: () => {
+            dispatch(sendMessageAC())
+        }
+    }
 }
 
-export const DialogsContainer = (props: DialogsContainersPropsType) => {
 
-    const dialogsPage = props.store.getState().dialogsPage
+export const DialogsContainer = connect(mapStateToProps, mapDispatchToProps)(Dialogs)
 
-    const onSendMessageClick = () => {
-        props.store.dispatch(sendMessageAC())
-    }
-
-    const onNewMessageChange = (body: string) => {
-
-        props.store.dispatch(updateNewMessageBodyAC(body))
-    }
-
-
-    return < Dialogs
-        newMessageBody={dialogsPage.newMessageBody}
-        messages={dialogsPage.messages}
-        dialogs={dialogsPage.dialogs}
-        updateNewMessageBody={onNewMessageChange}
-        sendMessage={onSendMessageClick}
-
-    />
-
-
-}

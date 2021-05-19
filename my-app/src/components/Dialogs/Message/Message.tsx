@@ -3,6 +3,7 @@ import s from "../Dialogs.module.css";
 
 export type MessageType = {
     message: string
+
 }
 export const Message: React.FC<MessageType> = (props) => {
     return(<>

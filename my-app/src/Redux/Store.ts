@@ -19,16 +19,16 @@ export type DialogsPageType = {
     dialogs: Array<DialogType>
     newMessageBody: string
 }
-export type PostType = {
+ type PostType = {
     id: number;
     message: string
     likesCount: number
 }
-export type DialogType = {
+type DialogType = {
     id: number
     name: string
 }
-export type MessageType = {
+type MessageType = {
     id: number
     message: string
 }
@@ -90,12 +90,13 @@ const store: StoreType = {
     getState() {
         return this._state
     },
-    dispatch(action:ActionTypes) {
-        this._state.profilePage  = profileReducer(this._state.profilePage,action)
-        this._state.dialogsPage  = dialogsReducer(this._state.dialogsPage,action)
-        this._state.sidebar  = sidebarReducer(this._state.sidebar,action)
+    dispatch(action: ActionTypes) {
+        this._state.profilePage = profileReducer(this._state.profilePage, action)
+        this._state.dialogsPage = dialogsReducer(this._state.dialogsPage, action)
+        this._state.sidebar = sidebarReducer(this._state.sidebar, action)
         this._callSubscriber()
     }
 }
 export default store
+// https://www.freecodecamp.org/learn/
 

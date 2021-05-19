@@ -3,7 +3,8 @@ import React, {ChangeEvent} from 'react'
 import s from './Dialogs.module.css'
 import {DialogItem} from "./Dialogitem/DialogItemType";
 import {Message, MessageType} from "./Message/Message";
-import {DialogType} from "../../Redux/Store";
+import {DialogType} from "../../Redux/dialogs-reducer";
+
 
 
 type DialogsPropsType = {
@@ -19,11 +20,11 @@ type DialogsPropsType = {
 export const Dialogs = (props: DialogsPropsType) => {
 
     let dialogsElement = props.dialogs.map(
-        (d) => <DialogItem name={d.name} id={d.id}/>
+        (d) => <DialogItem key={d.id} name={d.name} id={d.id}/>
     )
 
     let messagesElements = props.messages.map(
-        (m) => <Message message={m.message}/>
+        (m) => <Message  message={m.message}/>
     )
 
     let newMessageBody = props.newMessageBody
