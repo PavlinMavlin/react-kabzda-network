@@ -1,6 +1,7 @@
 import profileReducer, {addPostAC, updateNewPostTextAC} from "./profile-reducer";
 import dialogsReducer, {sendMessageAC, updateNewMessageBodyAC} from "./dialogs-reducer";
 import {sidebarReducer} from "./sidebar-reducer";
+import {followAC, unfollowAC} from "./users-reducer";
 
 
 //TYPES
@@ -45,6 +46,7 @@ export type ActionTypes =
     | ReturnType<typeof updateNewPostTextAC>
     | ReturnType<typeof updateNewMessageBodyAC>
     | ReturnType<typeof sendMessageAC>
+
 
 //STATE
 const store: StoreType = {
