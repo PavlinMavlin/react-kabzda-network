@@ -1,5 +1,3 @@
-import {ActionTypes} from "./Store";
-
 const FOLLOW = "FOLLOW"
 const UNFOLLOW = "UNFOLLOW"
 const SET_USERS = "SET_USERS"
@@ -13,18 +11,22 @@ export type InitialStateType = {
 }
 export type UsersType = {
     id: number;
-    fullName: string
+    name: string
     status: string
     location: LocationType
     followed: boolean
-    photoUrl:string
+    photos:PhotosUserType
+}
+type PhotosUserType={
+    small:string|null
+    large:string|null
 }
 type LocationType = {
     city: string
     country: string
 }
 let initialState: InitialStateType = {
-    users:[]
+    users: []
 }
 
 
@@ -52,8 +54,8 @@ const usersReducer = (state = initialState, action: UsersActionType): InitialSta
                 })
             }
 
-            case SET_USERS: {
-            return {...state,users:[...state.users,...action.users]}
+        case SET_USERS: {
+            return {...state, users: [...state.users, ...action.users]}
         }
 
         default:
