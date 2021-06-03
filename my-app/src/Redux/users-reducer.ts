@@ -2,7 +2,7 @@ const FOLLOW = "FOLLOW"
 const UNFOLLOW = "UNFOLLOW"
 const SET_USERS = "SET_USERS"
 const SET_CURRENT_PAGE = "SET_CURRENT_PAGE"
-const SET_TOTAL_USERS_COUNT="SET_TOTAL_USERS_COUNT"
+const SET_TOTAL_USERS_COUNT = "SET_TOTAL_USERS_COUNT"
 
 type UsersActionType = ReturnType<typeof followAC>
     | ReturnType<typeof unfollowAC>
@@ -105,7 +105,7 @@ export const setCurrentPageAC = (currentPage: number) => {
         currentPage
     } as const
 }
-export const setTotalCountAC = (totalUsersCount:number) => {
+export const setTotalCountAC = (totalUsersCount: number) => {
     return {
         type: SET_TOTAL_USERS_COUNT,
         totalUsersCount
