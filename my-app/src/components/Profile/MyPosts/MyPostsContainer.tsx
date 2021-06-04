@@ -30,21 +30,3 @@ const mapDispatchToProps = (dispatch: Dispatch): MapDispatchToPropsType => {
     }
 }
 export const MyPostsContainer = connect(mapStateToProps, mapDispatchToProps)(MyPosts)
-//
-// export const MyPostsContainer = (props: MyPostsContainerType) => {
-//     const profilePage = props.store.getState().profilePage
-//     const addPost = () => {
-//         props.store.dispatch(addPostAC(profilePage.newPostText))
-//     }
-//
-//     const onChangeText = (newText: string) => {
-//         props.store.dispatch(updateNewPostTextAC(newText))
-//     }
-//
-//     return <MyPosts onChangeText={onChangeText}
-//                     addPost={addPost}
-//                     posts={profilePage.posts}
-//                     newPostText={profilePage.newPostText}
-//     />
-//
-// }

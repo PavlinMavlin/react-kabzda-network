@@ -40,64 +40,64 @@ export type StoreType = {
     getState: () => RootStateType
     dispatch: (action: ActionTypes) => void
 }
-export type ActionTypes =
+type ActionTypes =
     ReturnType<typeof addPostAC>
     | ReturnType<typeof updateNewPostTextAC>
     | ReturnType<typeof updateNewMessageBodyAC>
     | ReturnType<typeof sendMessageAC>
 
 
-//STATE
-const store: StoreType = {
-    _state: {
-        profilePage: {
-            newPostText: "",
-            posts: [
-                {id: 1, message: 'Hi, how are you ?', likesCount: 15},
-                {id: 2, message: "How is your kamasutra", likesCount: 10},
-                {id: 3, message: "haha", likesCount: 10},
-                {id: 4, message: "how are you", likesCount: 10},
-            ]
-        },
-
-        dialogsPage: {
-            dialogs: [
-                {id: 1, name: 'Dimych'},
-                {id: 2, name: "Andrey"},
-                {id: 3, name: "Sveta"},
-                {id: 4, name: "Sasha"},
-                {id: 5, name: "Sasha"},
-                {id: 6, name: "Victor"},
-
-            ],
-            messages: [
-                {id: 1, message: "HI"},
-                {id: 2, message: "How is your kamasutra"},
-                {id: 3, message: "yo"},
-                {id: 4, message: "yo"},
-                {id: 5, message: "yo"},
-                {id: 6, message: "yo"},
-            ],
-            newMessageBody: "",
-        },
-        sidebar: {}
-    },
-    _callSubscriber() {
-        console.log("state change")
-    },
-    subscribe(callback: () => void) {
-        this._callSubscriber = callback
-    },
-    getState() {
-        return this._state
-    },
-    dispatch(action: ActionTypes) {
-        this._state.profilePage = profileReducer(this._state.profilePage, action)
-        this._state.dialogsPage = dialogsReducer(this._state.dialogsPage, action)
-        this._state.sidebar = sidebarReducer(this._state.sidebar, action)
-        this._callSubscriber()
-    }
-}
-export default store
-// https://www.freecodecamp.org/learn/
+// //STATE
+// const store: StoreType = {
+//     _state: {
+//         profilePage: {
+//             newPostText: "",
+//             posts: [
+//                 {id: 1, message: 'Hi, how are you ?', likesCount: 15},
+//                 {id: 2, message: "How is your kamasutra", likesCount: 10},
+//                 {id: 3, message: "haha", likesCount: 10},
+//                 {id: 4, message: "how are you", likesCount: 10},
+//             ]
+//         },
+//
+//         dialogsPage: {
+//             dialogs: [
+//                 {id: 1, name: 'Dimych'},
+//                 {id: 2, name: "Andrey"},
+//                 {id: 3, name: "Sveta"},
+//                 {id: 4, name: "Sasha"},
+//                 {id: 5, name: "Sasha"},
+//                 {id: 6, name: "Victor"},
+//
+//             ],
+//             messages: [
+//                 {id: 1, message: "HI"},
+//                 {id: 2, message: "How is your kamasutra"},
+//                 {id: 3, message: "yo"},
+//                 {id: 4, message: "yo"},
+//                 {id: 5, message: "yo"},
+//                 {id: 6, message: "yo"},
+//             ],
+//             newMessageBody: "",
+//         },
+//         sidebar: {}
+//     },
+//     _callSubscriber() {
+//         console.log("state change")
+//     },
+//     subscribe(callback: () => void) {
+//         this._callSubscriber = callback
+//     },
+//     getState() {
+//         return this._state
+//     },
+//     dispatch(action: ActionTypes) {
+//         this._state.profilePage = profileReducer(this._state.profilePage, action)
+//         this._state.dialogsPage = dialogsReducer(this._state.dialogsPage, action)
+//         this._state.sidebar = sidebarReducer(this._state.sidebar, action)
+//         this._callSubscriber()
+//     }
+// }
+// export default store
+// // https://www.freecodecamp.org/learn/
 

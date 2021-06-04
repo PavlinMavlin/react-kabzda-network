@@ -1,5 +1,3 @@
-import {ActionTypes} from "./Store";
-
 const UPDATE_NEW_MESSAGE_BODY = "UPDATE-NEW-MESSAGE-BODY"
 const SEND_MESSAGE = "SEND-MESSAGE"
 
@@ -12,6 +10,9 @@ export type DialogType = {
     name: string
 }
 export type InitialStateType=typeof initialState
+type ActionTypes =
+    | ReturnType<typeof updateNewMessageBodyAC>
+    | ReturnType<typeof sendMessageAC>
 
 
 const initialState = {
