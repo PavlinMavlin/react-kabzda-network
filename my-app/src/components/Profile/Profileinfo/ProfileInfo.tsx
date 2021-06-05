@@ -7,8 +7,7 @@ type ProfileInfoPropsType = {
 }
 
 export const ProfileInfo = (props: ProfileInfoPropsType) => {
-
-    console.log(props.profile)
+    console.log(props)
     return (
         <div>
             <div>
@@ -16,7 +15,7 @@ export const ProfileInfo = (props: ProfileInfoPropsType) => {
             </div>
 
             <div className={s.descriptionBlock}>
-                <img src={props.profile.photos.large}/>
+                <img src={props.profile.photos.large}   alt={" "}/>
                 ava+description
             </div>
 

@@ -3,6 +3,7 @@ import styles from "./users.module.css";
 import userPhoto from "../../assets/images/pngtree-vector-user-young-boy-avatar-icon-png-image_4827810.jpg";
 import {UsersType} from "../../Redux/users-reducer";
 import {NavLink} from "react-router-dom"
+
 type UsersPropsType = {
     totalUsersCount: number
     pageSize: number
@@ -18,6 +19,7 @@ export const Users = (props: UsersPropsType) => {
     for (let i = 1; i <= pagesCount; i++) {
         pages.push(i)
     }
+
     return (
         <div>
             <div>
@@ -35,7 +37,7 @@ export const Users = (props: UsersPropsType) => {
             {props.users.map(u => <div key={u.id}>
                 <span>
                     <div>
-                        <NavLink to={"/profile/"}>
+                        <NavLink to={"/profile/" + u.id}>
                         <img src={u.photos.small !== null ? u.photos.small : userPhoto} className={styles.userPhoto}/>
                     </NavLink>
                         </div>
