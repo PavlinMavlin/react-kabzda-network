@@ -1,9 +1,12 @@
+import {AppActionType, AppThunkType} from "./redux-store";
+import {authApi, usersAPI} from "../api/api";
+
 const ADD_POST = "ADD-POST"
 const UPDATE_NEW_POST_TEXT = "UPDATE-NEW-POST-TEXT"
 const SET_USERS_PROFILE = "SET_USERS_PROFILE"
 
 
-type ActionTypes =
+export type ProfileActionTypes =
     ReturnType<typeof addPostAC>
     | ReturnType<typeof updateNewPostTextAC>
     | ReturnType<typeof setUsersProfile>
@@ -18,13 +21,13 @@ export type ProfileType = {
     photos: ProfilePhotosType
 }
 export type ProfileContactsType = {
-    facebook: string|null
+    facebook: string | null
     website: null | string
-    vk: string|null
-    twitter: string|null
-    instagram: string|null
+    vk: string | null
+    twitter: string | null
+    instagram: string | null
     youtube: null | string
-    github: string|null
+    github: string | null
     mainLink: null | string
 }
 
@@ -56,7 +59,7 @@ let initialState: InitialStateType = {
 }
 
 
-const profileReducer = (state = initialState, action: ActionTypes): InitialStateType => {
+const profileReducer = (state = initialState, action: AppActionType): InitialStateType => {
     switch (action.type) {
         case ADD_POST:
             const newPost: PostType = {
@@ -105,4 +108,13 @@ export const setUsersProfile = (profile: ProfileType) => {
     } as const
 }
 
+
+export const getUserProfile = (userId: string): AppThunkType => {
+    return (dispatch) => {
+        usersAPI.getProfile(userId).then(response => {
+                dispatch(setUsersProfile(response.data))
+            }
+        )
+    }
+}
 export default profileReducer

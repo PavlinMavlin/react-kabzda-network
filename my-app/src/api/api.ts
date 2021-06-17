@@ -22,11 +22,15 @@ export const usersAPI = {
         return instance.post(`follow/${id}`
         )
     },
-}
-
-export const profileApi = {
     getProfile(userId: string) {
         return instance.get(`profile/` + userId)
+    }
+
+}
+
+export const authApi = {
+    me() {
+        return instance.get(`auth/me` )
     },
 }
 
