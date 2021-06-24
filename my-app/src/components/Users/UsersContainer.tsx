@@ -11,6 +11,7 @@ import {
 } from "../../Redux/users-reducer";
 import {Users} from "./Users";
 import {Preloader} from "../common/prelouder/Preloader";
+import {withAuthRedirect} from "../../hoc/withAuthRedirect";
 
 
 type MapStateToPropsType = {
@@ -76,8 +77,8 @@ class UserContainer extends React.Component<UserContainerPropsType, InitialState
 }
 
 
-export default connect(mapStateToProps, {
+export default withAuthRedirect(connect(mapStateToProps, {
     follow: followSuccess, unfollow: unfollowSuccess,
-    setCurrentPage,  getUsers
+    setCurrentPage, getUsers
 
-})(UserContainer)
+})(UserContainer))
