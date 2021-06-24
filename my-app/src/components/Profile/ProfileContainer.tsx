@@ -1,7 +1,7 @@
 import React from "react";
 import {Profile} from "./Profile";
 import {connect} from "react-redux";
-import {getUserProfile, ProfileType} from "../../Redux/profile-reducer";
+import {getStatus, getUserProfile, ProfileType, updateStatus} from "../../Redux/profile-reducer";
 import {RootReduxStateType} from "../../Redux/redux-store";
 import {Preloader} from "../common/prelouder/Preloader";
 import {RouteComponentProps, withRouter} from "react-router-dom";
@@ -12,7 +12,9 @@ import {compose} from "redux";
 type ProfileContainerPropsType = {
     getUserProfile: (userId: string) => void
     profile: ProfileType | null
-
+    getStatus: (userId: string) => void
+    status: string
+    updateStatus: (status: string) => void
 }
 
 type ProfileContainerStateType = {
@@ -40,27 +42,32 @@ class ProfileContainer extends React.Component<WithRoutePropsType, ProfileContai
         let userId = this.props.match.params.userId;
 
         if (!userId) {
-            userId = "2";
+            userId = "17198";
         }
         this.props.getUserProfile(userId)
-
+        this.props.getStatus(userId)
     }
 
     render() {
 
-        return this.props.profile ? <Profile profile={this.props.profile}/> : <Preloader/>
+        return this.props.profile ? <Profile profile={this.props.profile}
+                                             status={this.props.status}
+                                             updateStatus={this.props.updateStatus}
+
+
+        /> : <Preloader/>
     }
 }
 
 let mapStateToProps = (state: RootReduxStateType) => (
     {
         profile: state.profilePage.profile,
-
+        status: state.profilePage.status,
     }
 )
 
 
-export default compose<React.ComponentType>(connect(mapStateToProps, {getUserProfile}),
+export default compose<React.ComponentType>(connect(mapStateToProps, {getUserProfile,getStatus,updateStatus,}),
     withRouter,
     withAuthRedirect)
 (ProfileContainer)
