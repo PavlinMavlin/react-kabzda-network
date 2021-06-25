@@ -154,6 +154,7 @@ export const getUsers = (currentPage: number, pageSize: number): AppThunkType =>
         dispatch(toggleIsFetching(true))
 
         usersAPI.getUsers(currentPage, pageSize).then(data => {
+
                 dispatch(toggleIsFetching(false))
                 dispatch(setUsers(data.items))
                 dispatch(setTotalUsersCount(data.totalCount))

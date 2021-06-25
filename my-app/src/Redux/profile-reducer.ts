@@ -144,10 +144,10 @@ export const getStatus = (userId: string): AppThunkType => {
 export const updateStatus = (status: string): AppThunkType => {
     return (dispatch) => {
         profileAPI.updateStatus(status).then(response => {
-            if(response.data.resultCode===0){
-                dispatch(setStatus(response.data))
-            }
+                if (response.data.resultCode === 0) {
 
+                    dispatch(setStatus(status))
+                }
             }
         )
     }

@@ -51,6 +51,7 @@ let mapStateToProps = (state: RootReduxStateType): MapStateToPropsType => {
 class UserContainer extends React.Component<UserContainerPropsType, InitialStateType> {
     componentDidMount() {
         this.props.getUsers(this.props.currentPage, this.props.pageSize)
+
     }
 
     onPageChanged = (currentPage: number) => {
@@ -86,8 +87,3 @@ export default compose<React.ComponentType>(
     }),withAuthRedirect
 )(UserContainer)
 
-// export const withAuthRedirect(connect(mapStateToProps, {
-//     follow: followSuccess, unfollow: unfollowSuccess,
-//     setCurrentPage, getUsers
-//
-// })(UserContainer))
