@@ -1,15 +1,13 @@
 import {AppActionType, AppThunkType} from "./redux-store";
-import {authApi, profileAPI, usersAPI} from "../api/api";
+import {profileAPI, usersAPI} from "../api/api";
 
 const ADD_POST = "ADD-POST"
-const UPDATE_NEW_POST_TEXT = "UPDATE-NEW-POST-TEXT"
 const SET_USERS_PROFILE = "SET_USERS_PROFILE"
 const SET_STATUS = "SET_STATUS"
 
 
 export type ProfileActionTypes =
     ReturnType<typeof addPostAC>
-    | ReturnType<typeof updateNewPostTextAC>
     | ReturnType<typeof setUsersProfile>
     | ReturnType<typeof setStatus>
 
@@ -39,7 +37,6 @@ export type ProfilePhotosType = {
 }
 
 export type InitialStateType = {
-    newPostText: string
     posts: Array<PostType>
     profile: ProfileType | null
     status: string
@@ -50,7 +47,6 @@ export type PostType = {
     likesCount: number
 }
 let initialState: InitialStateType = {
-    newPostText: "",
     posts: [
         {id: 1, message: 'Hi, how are you ?', likesCount: 15},
         {id: 2, message: "How is your kamasutra", likesCount: 10},
@@ -73,13 +69,9 @@ const profileReducer = (state = initialState, action: AppActionType): InitialSta
             return {
                 ...state,
                 posts: [...state.posts, newPost],
-                newPostText: ""
+
             }
-        case UPDATE_NEW_POST_TEXT:
-            return {
-                ...state,
-                newPostText: action.newText
-            }
+
         case SET_USERS_PROFILE:
             return {
                 ...state,
@@ -103,12 +95,7 @@ export const addPostAC = (postText: string) => {
         postText: postText
     } as const
 }
-export const updateNewPostTextAC = (newText: string) => {
-    return {
-        type: UPDATE_NEW_POST_TEXT,
-        newText: newText
-    } as const
-}
+
 export const setUsersProfile = (profile: ProfileType) => {
     return {
         type: SET_USERS_PROFILE,
