@@ -25,8 +25,7 @@ export const authReducer = (state = initialState, action: AppActionType): Initia
         case SET_USER_DATA:
             return {
                 ...state,
-                ...action.data,
-                isAuth: true
+                ...action.payload,
             }
         default:
             return state
@@ -34,10 +33,10 @@ export const authReducer = (state = initialState, action: AppActionType): Initia
 
 }
 
-export const setAuthUserData = (id: number, email: string, login: string) => {
+export const setAuthUserData = (id: number | null, email: string | null, login: string | null, isAuth: boolean) => {
     return {
         type: SET_USER_DATA,
-        data: {id, email, login}
+        payload: {id, email, login, isAuth}
     } as const
 }
 
@@ -46,7 +45,27 @@ export const getAuthUserTC = (): AppThunkType => {
         authApi.me().then(response => {
                 if (response.data.resultCode === 0) {
                     let {id, email, login} = response.data.data
-                   dispatch(setAuthUserData(id, email, login))
+                    dispatch(setAuthUserData(id, email, login, true))
+                }
+            }
+        )
+    }
+}
+export const login = (email: string, password: string, rememberMe: boolean): AppThunkType => {
+    return (dispatch) => {
+        authApi.login(email, password, rememberMe).then(response => {
+                if (response.data.resultCode === 0) {
+                    dispatch(getAuthUserTC())
+                }
+            }
+        )
+    }
+}
+export const logout = (): AppThunkType => {
+    return (dispatch) => {
+        authApi.logout().then(response => {
+                if (response.data.resultCode === 0) {
+                    dispatch(setAuthUserData(null, null, null, false))
                 }
             }
         )
