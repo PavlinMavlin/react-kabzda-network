@@ -10,12 +10,12 @@ import {compose} from "redux";
 
 
 type ProfileContainerPropsType = {
-    getUserProfile: (userId: string) => void
+    getUserProfile: (userId: number) => void
     profile: ProfileType | null
-    getStatus: (userId: string) => void
+    getStatus: (userId: number) => void
     status: string
     updateStatus: (status: string) => void
-    authorizedUserId:string
+    authorizedUserId: number
 }
 
 type ProfileContainerStateType = {
@@ -40,11 +40,15 @@ class ProfileContainer extends React.Component<WithRoutePropsType, ProfileContai
 
     componentDidMount() {
 
-        let userId = this.props.match.params.userId;
+        let userId = +this.props.match.params.userId;
 
         if (!userId) {
             userId = this.props.authorizedUserId;
+            if (!userId){
+                this.props.history.push("/login")
+            }
         }
+
         this.props.getUserProfile(userId)
         this.props.getStatus(userId)
     }
@@ -64,13 +68,13 @@ let mapStateToProps = (state: RootReduxStateType) => (
     {
         profile: state.profilePage.profile,
         status: state.profilePage.status,
-        authorizedUserId:state.auth.id,
-        isAuth:state.auth.isAuth,
+        authorizedUserId: state.auth.id,
+        isAuth: state.auth.isAuth,
     }
 )
 
 
-export default compose<React.ComponentType>(connect(mapStateToProps, {getUserProfile,getStatus,updateStatus,}),
+export default compose<React.ComponentType>(connect(mapStateToProps, {getUserProfile, getStatus, updateStatus,}),
     withRouter,
     withAuthRedirect)
 (ProfileContainer)

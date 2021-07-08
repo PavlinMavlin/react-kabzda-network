@@ -84,6 +84,6 @@ export default compose<React.ComponentType>(
         follow: followSuccess, unfollow: unfollowSuccess,
         setCurrentPage, getUsers
 
-    }),withAuthRedirect
+    })
 )(UserContainer)
 

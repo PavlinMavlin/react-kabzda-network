@@ -111,7 +111,7 @@ export const setStatus = (status: string) => {
 }
 
 
-export const getUserProfile = (userId: string): AppThunkType => {
+export const getUserProfile = (userId: number): AppThunkType => {
     return (dispatch) => {
         usersAPI.getProfile(userId).then(response => {
                 dispatch(setUsersProfile(response.data))
@@ -119,7 +119,7 @@ export const getUserProfile = (userId: string): AppThunkType => {
         )
     }
 }
-export const getStatus = (userId: string): AppThunkType => {
+export const getStatus = (userId: number): AppThunkType => {
     return (dispatch) => {
         profileAPI.getStatus(userId).then(response => {
                 dispatch(setStatus(response.data))

@@ -41,9 +41,9 @@ export const setAuthUserData = (id: number | null, email: string | null, login: 
     } as const
 }
 
-export const getAuthUserTC = (): AppThunkType => {
+export const getAuthUserData = (): AppThunkType => {
     return (dispatch) => {
-        authApi.me().then(response => {
+       return authApi.me().then(response => {
                 if (response.data.resultCode === 0) {
                     let {id, email, login} = response.data.data
                     dispatch(setAuthUserData(id, email, login, true))
@@ -56,7 +56,7 @@ export const login = (email: string, password: string, rememberMe: boolean): App
     return (dispatch) => {
         authApi.login(email, password, rememberMe).then(response => {
                 if (response.data.resultCode === 0) {
-                    dispatch(getAuthUserTC())
+                    dispatch(getAuthUserData())
                 } else {
                    let message= response.data.messages.length>0?response.data.messages[0]:"Some error"
                     dispatch(stopSubmit("login", {_error: message}))
