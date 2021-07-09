@@ -12,7 +12,13 @@ import {
 import {Users} from "./Users";
 import {Preloader} from "../common/prelouder/Preloader";
 import {withAuthRedirect} from "../../hoc/withAuthRedirect";
-import { compose } from "redux";
+import {compose} from "redux";
+import {
+    getCurrentPageSelector, getFollowingInProgressSelector, getIfFetchingSelector,
+    getPageSizeSelector,
+    getTotalUsersCountSelector,
+    getUsersSelector
+} from "../../Redux/users-selectors";
 
 
 type MapStateToPropsType = {
@@ -38,12 +44,12 @@ type UserContainerPropsType = {
 
 let mapStateToProps = (state: RootReduxStateType): MapStateToPropsType => {
     return {
-        users: state.userPage.users,
-        pageSize: state.userPage.pageSize,
-        totalUsersCount: state.userPage.totalUsersCount,
-        currentPage: state.userPage.currentPage,
-        ifFetching: state.userPage.ifFetching,
-        followingInProgress: state.userPage.followingInProgress,
+        users: getUsersSelector(state),
+        pageSize: getPageSizeSelector(state),
+        totalUsersCount: getTotalUsersCountSelector(state),
+        currentPage: getCurrentPageSelector(state),
+        ifFetching: getIfFetchingSelector(state),
+        followingInProgress: getFollowingInProgressSelector(state),
     }
 }
 
