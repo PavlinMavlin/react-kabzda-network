@@ -15,7 +15,7 @@ import {withAuthRedirect} from "../../hoc/withAuthRedirect";
 import {compose} from "redux";
 import {
     getCurrentPageSelector, getFollowingInProgressSelector, getIfFetchingSelector,
-    getPageSizeSelector,
+    getPageSizeSelector, getUsersSuperSelector,
     getTotalUsersCountSelector,
     getUsersSelector
 } from "../../Redux/users-selectors";
@@ -44,7 +44,7 @@ type UserContainerPropsType = {
 
 let mapStateToProps = (state: RootReduxStateType): MapStateToPropsType => {
     return {
-        users: getUsersSelector(state),
+        users: getUsersSuperSelector(state),
         pageSize: getPageSizeSelector(state),
         totalUsersCount: getTotalUsersCountSelector(state),
         currentPage: getCurrentPageSelector(state),
