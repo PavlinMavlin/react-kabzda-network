@@ -11,13 +11,14 @@ import {
 } from "../../Redux/users-reducer";
 import {Users} from "./Users";
 import {Preloader} from "../common/prelouder/Preloader";
-import {withAuthRedirect} from "../../hoc/withAuthRedirect";
 import {compose} from "redux";
 import {
-    getCurrentPageSelector, getFollowingInProgressSelector, getIfFetchingSelector,
-    getPageSizeSelector, getUsersSuperSelector,
+    getCurrentPageSelector,
+    getFollowingInProgressSelector,
+    getIfFetchingSelector,
+    getPageSizeSelector,
     getTotalUsersCountSelector,
-    getUsersSelector
+    getUsersSuperSelector
 } from "../../Redux/users-selectors";
 
 
