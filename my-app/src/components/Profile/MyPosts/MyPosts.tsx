@@ -12,32 +12,34 @@ type MyPostsType = {
     addPost: (postText: string) => void
 }
 
-export const MyPosts = (props: MyPostsType) => {
+export const MyPosts = React.memo((props: MyPostsType) => {
 
-    let postsElements = props.posts.map(
-        (p) => <Post message={p.message} likesCount={p.likesCount}/>
-    )
+        let postsElements = props.posts.map(
+            (p) => <Post message={p.message} likesCount={p.likesCount}/>
+        )
 
-    const addPost = (values:FormDataType) => {
-        props.addPost(values.newPostText)
+        const addPost = (values: FormDataType) => {
+            props.addPost(values.newPostText)
+        }
+
+        return (<div>
+            <h3>My post</h3>
+            <AddPostFormRedux onSubmit={addPost}/>
+            <div className={s.posts}>
+                {postsElements}
+
+
+            </div>
+        </div>)
+
     }
+)
 
-    return (<div>
-        <h3>My post</h3>
-        <AddPostFormRedux onSubmit={addPost}/>
-        <div className={s.posts}>
-            {postsElements}
-
-
-        </div>
-    </div>)
-
-}
 type FormDataType = {
     newPostText: string
 }
 
-const maxLength10 =maxLengthCreator(10)
+const maxLength10 = maxLengthCreator(10)
 
 export const AddNewPostForm: React.FC<InjectedFormProps<FormDataType>> = (props) => {
 
@@ -45,7 +47,7 @@ export const AddNewPostForm: React.FC<InjectedFormProps<FormDataType>> = (props)
         <form onSubmit={props.handleSubmit}>
             <div>
                 <Field component={Textarea}
-                       validate={[ required,maxLength10]}
+                       validate={[required, maxLength10]}
                        placeholder={"Post message"}
                        name={'newPostText'}/>
             </div>
