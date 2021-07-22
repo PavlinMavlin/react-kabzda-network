@@ -4,12 +4,14 @@ import {profileAPI, usersAPI} from "../api/api";
 const ADD_POST = "ADD-POST"
 const SET_USERS_PROFILE = "SET_USERS_PROFILE"
 const SET_STATUS = "SET_STATUS"
+const DELETE_POST = "DELETE_POST"
 
 
 export type ProfileActionTypes =
     ReturnType<typeof addPostAC>
     | ReturnType<typeof setUsersProfile>
     | ReturnType<typeof setStatus>
+    | ReturnType<typeof deleteAC>
 
 export type ProfileType = {
     aboutMe: string
@@ -82,6 +84,11 @@ const profileReducer = (state = initialState, action: AppActionType): InitialSta
                 ...state,
                 status: action.status
             }
+        case DELETE_POST:
+            return {
+                ...state,
+                posts: state.posts.filter(p => p.id != action.postId)
+            }
 
 
         default:
@@ -93,6 +100,12 @@ export const addPostAC = (postText: string) => {
     return {
         type: ADD_POST,
         postText: postText
+    } as const
+}
+export const deleteAC = (postId: number) => {
+    return {
+        type: DELETE_POST,
+        postId
     } as const
 }
 
