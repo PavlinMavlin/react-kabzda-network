@@ -13,10 +13,6 @@ export const ProfileInfo = (props: ProfileInfoPropsType) => {
 
     return (
         <div>
-            {/*<div>*/}
-            {/*    <img src={'https://img.as-creation.com/s0/031021.jpg'} alt={" "}/>*/}
-            {/*</div>*/}
-
             <div className={s.descriptionBlock}>
                 <img src={props.profile.photos.large} alt={" "}/>
                 <ProfileStatusWithHooks status={props.status} updateStatus={props.updateStatus}/>

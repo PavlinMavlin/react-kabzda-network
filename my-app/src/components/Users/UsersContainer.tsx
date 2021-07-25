@@ -2,10 +2,11 @@ import React from "react";
 import {connect} from "react-redux";
 import {RootReduxStateType} from "../../Redux/redux-store";
 import {
+    follow,
     followSuccess,
     getUsers,
     InitialStateType,
-    setCurrentPage,
+    setCurrentPage, unfollow,
     unfollowSuccess,
     UsersType
 } from "../../Redux/users-reducer";
@@ -57,12 +58,14 @@ let mapStateToProps = (state: RootReduxStateType): MapStateToPropsType => {
 
 class UserContainer extends React.Component<UserContainerPropsType, InitialStateType> {
     componentDidMount() {
-        this.props.getUsers(this.props.currentPage, this.props.pageSize)
+        const {currentPage, pageSize} = this.props
+        this.props.getUsers(currentPage, pageSize)
 
     }
 
     onPageChanged = (currentPage: number) => {
-        this.props.getUsers(currentPage, this.props.pageSize)
+        const {pageSize} = this.props
+        this.props.getUsers(currentPage, pageSize)
         this.props.setCurrentPage(currentPage)
     }
 
@@ -88,7 +91,7 @@ class UserContainer extends React.Component<UserContainerPropsType, InitialState
 
 export default compose<React.ComponentType>(
     connect(mapStateToProps, {
-        follow: followSuccess, unfollow: unfollowSuccess,
+        follow, unfollow,
         setCurrentPage, getUsers
 
     })

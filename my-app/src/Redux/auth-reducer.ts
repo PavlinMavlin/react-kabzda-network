@@ -2,7 +2,7 @@ import {AppActionType, AppThunkType} from "./redux-store";
 import {authApi} from "../api/api";
 import {stopSubmit} from "redux-form";
 
-const SET_USER_DATA = "SET_USER_DATA"
+const SET_USER_DATA = "AUTH/SET_USER_DATA"
 
 
 export type AuthActionType = ReturnType<typeof setAuthUserData>
@@ -41,37 +41,25 @@ export const setAuthUserData = (id: number | null, email: string | null, login: 
     } as const
 }
 
-export const getAuthUserData = (): AppThunkType => {
-    return (dispatch) => {
-       return authApi.me().then(response => {
-                if (response.data.resultCode === 0) {
-                    let {id, email, login} = response.data.data
-                    dispatch(setAuthUserData(id, email, login, true))
-                }
-            }
-        )
+export const getAuthUserData = (): AppThunkType => async (dispatch) => {
+    let response = await authApi.me();
+    if (response.data.resultCode === 0) {
+        let {id, email, login} = response.data.data
+        dispatch(setAuthUserData(id, email, login, true))
     }
 }
-export const login = (email: string, password: string, rememberMe: boolean): AppThunkType => {
-    return (dispatch) => {
-        authApi.login(email, password, rememberMe).then(response => {
-                if (response.data.resultCode === 0) {
-                    dispatch(getAuthUserData())
-                } else {
-                   let message= response.data.messages.length>0?response.data.messages[0]:"Some error"
-                    dispatch(stopSubmit("login", {_error: message}))
-                }
-            }
-        )
+export const login = (email: string, password: string, rememberMe: boolean): AppThunkType => async (dispatch) => {
+    let response = await authApi.login(email, password, rememberMe)
+    if (response.data.resultCode === 0) {
+        dispatch(getAuthUserData())
+    } else {
+        let message = response.data.messages.length > 0 ? response.data.messages[0] : "Some error"
+        dispatch(stopSubmit("login", {_error: message}))
     }
 }
-export const logout = (): AppThunkType => {
-    return (dispatch) => {
-        authApi.logout().then(response => {
-                if (response.data.resultCode === 0) {
-                    dispatch(setAuthUserData(null, null, null, false))
-                }
-            }
-        )
+export const logout = (): AppThunkType => async (dispatch) => {
+    let response = await authApi.logout()
+    if (response.data.resultCode === 0) {
+        dispatch(setAuthUserData(null, null, null, false))
     }
 }
