@@ -1,4 +1,4 @@
-import {applyMiddleware, combineReducers, createStore} from "redux";
+import {applyMiddleware, combineReducers, compose, createStore} from "redux";
 import profileReducer, {ProfileActionTypes} from "./profile-reducer";
 import dialogsReducer, {DialogsActionTypes} from "./dialogs-reducer";
 import {SideBarActionType, sidebarReducer} from "./sidebar-reducer";
@@ -15,12 +15,20 @@ export const reducers = combineReducers({
     userPage: userReducer,
     auth: authReducer,
     form: formReducer,
-    app:appReducer,
+    app: appReducer,
 })
+declare global {
+    interface Window {
+        __REDUX_DEVTOOLS_EXTENSION_COMPOSE__?: typeof compose;
+    }
+}
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+const store = createStore(reducers, composeEnhancers(
+    applyMiddleware(thunkMiddleware)
+));
 
-export type RootReduxStateType = ReturnType<typeof reducers>
+//let store = createStore(reducers, applyMiddleware(thunkMiddleware))
 
-let store = createStore(reducers, applyMiddleware(thunkMiddleware))
 
 export type AppActionType =
     UsersActionType
@@ -28,13 +36,13 @@ export type AppActionType =
     | ProfileActionTypes
     | AuthActionType
     | SideBarActionType
-|AppReducerActionType
+    | AppReducerActionType
 
+export type RootReduxStateType = ReturnType<typeof reducers>
 export type AppThunkType<ReturnType = void> = ThunkAction<ReturnType,
     RootReduxStateType,
     unknown,
     AppActionType>
-
 
 
 export default store
