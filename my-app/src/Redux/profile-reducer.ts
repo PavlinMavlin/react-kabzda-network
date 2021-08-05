@@ -5,7 +5,7 @@ const ADD_POST = "PROFILEPAGE/ADD-POST"
 const SET_USERS_PROFILE = "PROFILEPAGE/SET_USERS_PROFILE"
 const SET_STATUS = "PROFILEPAGE/SET_STATUS"
 const DELETE_POST = "PROFILEPAGE/DELETE_POST"
-
+const SAVE_PHOTO_SUCCESS = "PROFILEPAGE/SAVE_PHOTO_SUCCESS"
 
 export type ProfileActionTypes =
     ReturnType<typeof addPostAC>
@@ -89,6 +89,11 @@ const profileReducer = (state = initialState, action: AppActionType): InitialSta
                 ...state,
                 posts: state.posts.filter(p => p.id != action.postId)
             }
+        case SAVE_PHOTO_SUCCESS:
+
+            return {
+                ...state, profile: {...state.profile, photos: action.photos} as ProfileType
+            }
 
 
         default:
@@ -122,6 +127,12 @@ export const setStatus = (status: string) => {
         status
     } as const
 }
+export const savePhotoSuccess = (photos: ProfilePhotosType) => {
+    return {
+        type: SAVE_PHOTO_SUCCESS,
+        photos
+    } as const
+}
 
 
 export const getUserProfile = (userId: number): AppThunkType => async (dispatch) => {
@@ -136,6 +147,14 @@ export const updateStatus = (status: string): AppThunkType => async (dispatch) =
     const response = await profileAPI.updateStatus(status)
     if (response.data.resultCode === 0) {
         dispatch(setStatus(status))
+    }
+}
+export const savePhoto = (file: File): AppThunkType => async (dispatch) => {
+
+    const response = await profileAPI.savePhoto(file)
+    if (response.data.resultCode === 0) {
+        debugger
+        dispatch(savePhotoSuccess(response.data.data.photos))
     }
 }
 

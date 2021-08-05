@@ -1,7 +1,7 @@
 import React from "react";
 import {Profile} from "./Profile";
 import {connect} from "react-redux";
-import {getStatus, getUserProfile, ProfileType, updateStatus} from "../../Redux/profile-reducer";
+import {getStatus, getUserProfile, ProfileType, savePhoto, updateStatus} from "../../Redux/profile-reducer";
 import {RootReduxStateType} from "../../Redux/redux-store";
 import {Preloader} from "../common/prelouder/Preloader";
 import {RouteComponentProps, withRouter} from "react-router-dom";
@@ -16,6 +16,7 @@ type ProfileContainerPropsType = {
     status: string
     updateStatus: (status: string) => void
     authorizedUserId: number
+    savePhoto: (file: File) => void
 }
 
 type ProfileContainerStateType = {
@@ -38,13 +39,12 @@ class ProfileContainer extends React.Component<WithRoutePropsType, ProfileContai
         }
     }
 
-    componentDidMount() {
-
+    refreshProfile() {
         let userId = +this.props.match.params.userId;
 
         if (!userId) {
             userId = this.props.authorizedUserId;
-            if (!userId){
+            if (!userId) {
                 this.props.history.push("/login")
             }
         }
@@ -53,13 +53,24 @@ class ProfileContainer extends React.Component<WithRoutePropsType, ProfileContai
         this.props.getStatus(userId)
     }
 
+    componentDidMount() {
+
+        this.refreshProfile()
+    }
+
+    componentDidUpdate(prevProps: Readonly<WithRoutePropsType>, prevState: Readonly<ProfileContainerStateType>, snapshot?: string) {
+        if (this.props.match.params.userId != prevProps.match.params.userId) {
+            this.refreshProfile()
+        }
+    }
+
     render() {
 
         return this.props.profile ? <Profile profile={this.props.profile}
                                              status={this.props.status}
                                              updateStatus={this.props.updateStatus}
-
-
+                                             isOwner={!this.props.match.params.userId}
+                                             savePhoto={this.props.savePhoto}
         /> : <Preloader/>
     }
 }
@@ -74,7 +85,12 @@ let mapStateToProps = (state: RootReduxStateType) => (
 )
 
 
-export default compose<React.ComponentType>(connect(mapStateToProps, {getUserProfile, getStatus, updateStatus,}),
+export default compose<React.ComponentType>(connect(mapStateToProps, {
+        getUserProfile,
+        getStatus,
+        updateStatus,
+        savePhoto
+    }),
     withRouter,
     withAuthRedirect)
 (ProfileContainer)
