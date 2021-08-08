@@ -1,5 +1,7 @@
 import {AppActionType, AppThunkType} from "./redux-store";
 import {profileAPI, usersAPI} from "../api/api";
+import {ProfileDataFormType} from "../components/Profile/Profileinfo/ProfileDataForm";
+import {stopSubmit} from "redux-form";
 
 const ADD_POST = "PROFILEPAGE/ADD-POST"
 const SET_USERS_PROFILE = "PROFILEPAGE/SET_USERS_PROFILE"
@@ -23,14 +25,14 @@ export type ProfileType = {
     photos: ProfilePhotosType
 }
 export type ProfileContactsType = {
-    facebook: string | null
-    website: null | string
-    vk: string | null
-    twitter: string | null
-    instagram: string | null
-    youtube: null | string
-    github: string | null
-    mainLink: null | string
+    facebook: string
+    website: string
+    vk: string
+    twitter: string
+    instagram: string
+    youtube: string
+    github: string
+    mainLink: string
 }
 
 export type ProfilePhotosType = {
@@ -155,6 +157,16 @@ export const savePhoto = (file: File): AppThunkType => async (dispatch) => {
     if (response.data.resultCode === 0) {
         debugger
         dispatch(savePhotoSuccess(response.data.data.photos))
+    }
+}
+export const saveProfile = (profile: ProfileType): AppThunkType => async (dispatch, getState) => {
+    const userId = getState().auth.id
+    const response = await profileAPI.saveProfile(profile)
+    if (response.data.resultCode === 0 && userId) {
+        dispatch(getUserProfile(userId))
+    }else{
+        dispatch(stopSubmit("edit-profile", {_error:response.data.messages[0]}))
+        return Promise.reject(response.data.messages[0])
     }
 }
 

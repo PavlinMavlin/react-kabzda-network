@@ -1,7 +1,14 @@
 import React from "react";
 import {Profile} from "./Profile";
 import {connect} from "react-redux";
-import {getStatus, getUserProfile, ProfileType, savePhoto, updateStatus} from "../../Redux/profile-reducer";
+import {
+    getStatus,
+    getUserProfile,
+    ProfileType,
+    savePhoto,
+    saveProfile,
+    updateStatus
+} from "../../Redux/profile-reducer";
 import {RootReduxStateType} from "../../Redux/redux-store";
 import {Preloader} from "../common/prelouder/Preloader";
 import {RouteComponentProps, withRouter} from "react-router-dom";
@@ -17,6 +24,7 @@ type ProfileContainerPropsType = {
     updateStatus: (status: string) => void
     authorizedUserId: number
     savePhoto: (file: File) => void
+    saveProfile:(profile:ProfileType)=>void
 }
 
 type ProfileContainerStateType = {
@@ -71,6 +79,7 @@ class ProfileContainer extends React.Component<WithRoutePropsType, ProfileContai
                                              updateStatus={this.props.updateStatus}
                                              isOwner={!this.props.match.params.userId}
                                              savePhoto={this.props.savePhoto}
+                                             saveProfile={this.props.saveProfile}
         /> : <Preloader/>
     }
 }
@@ -89,7 +98,7 @@ export default compose<React.ComponentType>(connect(mapStateToProps, {
         getUserProfile,
         getStatus,
         updateStatus,
-        savePhoto
+        savePhoto,saveProfile
     }),
     withRouter,
     withAuthRedirect)
